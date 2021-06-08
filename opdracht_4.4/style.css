@@ -1,0 +1,9 @@
+button {
+    margin: 20%;
+    border-radius: 5px;
+    background-color: rgb(245, 245, 88);
+    font-size: 2vw;
+    color: darkcyan;
+    width: 15vw;
+    height: 15vw;
+}
