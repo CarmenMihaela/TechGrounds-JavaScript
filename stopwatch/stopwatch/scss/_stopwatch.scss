@@ -1,0 +1,61 @@
+body{
+    background-color: $grey;
+    color: white;
+    font-size: 2vw;
+}
+
+.outer-circle {
+    height: 35vw;
+    width: 35vw;
+    border-radius: 50%;
+    border: 1.5vw solid $grey;
+    box-shadow:  inset 0px 0px 10px 15px rgb(46, 45, 45), 0px 0px 20px 5px lightgrey;
+    margin: 5% 30%;
+    position: relative;
+    z-index: 12;
+
+}
+
+.big-circle {
+    background-color: black;
+    height: 30vw;
+    width: 30vw;
+    border-radius: 50%;
+    margin-top: 3%;
+    margin-left: 3%;
+
+    .brand {
+        padding: 10% 40%;
+        text-transform: uppercase;
+    }
+
+    #time {
+        font-size: 7vw;
+        margin: 5% 10%;
+    }
+
+    button {
+        width: 6vw;
+        height: 6vw;
+        border-radius: 50%;
+        border: 5px solid white;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 1vw;
+       
+        &:first-of-type {
+            margin-left: 20%;
+            background-color: $start;
+        }
+
+        &:nth-of-type(2) {
+            background-color: $pauze;
+        }
+
+        &:nth-of-type(3) {
+            background-color: $stop;
+        }
+    }
+    
+
+}
