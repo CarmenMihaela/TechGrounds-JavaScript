@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color:#161616;
+}
+
+h1 {
+    color: whitesmoke;
+    margin: 1% auto auto 0.5%;
+    text-align: center;
+}
+
+#container {
+    position: relative;
+    /* overflow: hidden; */
+    width: 60vw;
+    height:40vw;
+    margin: 1vw auto;
+}
+
+#picture3 {
+    width: 60vw;
+    height:40vw;
+    border-radius: 8px;
+    position: absolute;
+    background-image: url("media/image2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    left: 60vw;
+}
+
+#picture1 {
+    width: 60vw;
+    height:40vw;
+    border-radius: 8px;
+    position: absolute;
+    background-image: url("media/image3.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    left: -60vw;
+}
+
+
+#picture2 {
+    width: 60vw;
+    height:40vw;
+    border-radius: 8px;
+    position: absolute;
+    background-image: url("media/image1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+@keyframes moveRight2 {
+    0% {right: 0}
+    100% {right: 60vw}
+}
+
+@keyframes moveRight3 {
+    0% {left: 60vw}
+    100% {left: 0vw}
+}
+
+@keyframes moveLeft1 {
+    0% {left: -60}
+    100% {left: 0vw}
+}
+
+@keyframes moveLeft2 {
+    0% {left: 0}
+    100% {left: 60vw}
+}
+
+button {
+    width: 3vw;
+    height: 40.1vw;
+    background-color: rgba(0,0,0,0.3);
+    color: rgb(94, 92, 92);
+    border-radius: 8px 0px 0px 8px; /* top-left | top-right | bottom-right | bottom-left */
+    font-size: 3vw;
+    position: absolute;
+    margin: 0vw 0;
+    border: 2px solid  rgba(0,0,0,0.1);
+    font-weight: 100;
+    transition-property: background-color, color;
+    transition-duration: 1s;
+}
+
+.hover:hover {
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+}
+
+button:nth-of-type(2) {
+    margin-left: 57vw;
+    border-radius: 0px 8px 8px 0px; /* top-left | top-right | bottom-right | bottom-left */
+}
+
+.fas {
+    background: transparent;
+}
+
+.animateRight2 {
+    animation-name: moveRight2;
+    animation-duration: 5s;
+}
+
+.animateRight3 {
+    animation-name: moveRight3;
+    animation-duration: 5s;
+}
+
+.animateLeft {
+    animation-name: moveLeft;
+    animation-duration: 5s;
+    animation-fill-mode: backwards;
+}
+
+
+
+
+
