@@ -94,23 +94,24 @@ let pictureList = ["media/image1.jpg",
 
 document.getElementById('right').classList.add("hover")
 document.getElementById('left').classList.remove("hover")
+console.log(pictureList.length - 1)
 
 picIndex = 1
 
 function swipeRight() {
   setTimeout(function changePictureRight() {
-  if (picIndex == 2) {
+  if (picIndex == (pictureList.length - 1)) {
     document.getElementById('right').classList.remove("hover")
   }
   if (picIndex >= 1) {
     document.getElementById('left').classList.add("hover")
   }
-  if (picIndex >= 2) {
-    picIndex = 2
+  if (picIndex >= (pictureList.length - 1)) {
+    picIndex = (pictureList.length - 1)
   }
   imageSource1 = 'url("' + pictureList[picIndex] + '")'
   document.getElementById('picture2').style.backgroundImage = imageSource1
-  if (picIndex == 2){
+  if (picIndex == (pictureList.length - 1)){
     imageSource2 = 'url("' + pictureList[picIndex] + '")'
   } else {imageSource2 = 'url("' + pictureList[picIndex + 1] + '")'} 
   document.getElementById('picture3').style.backgroundImage = imageSource2
@@ -118,7 +119,7 @@ function swipeRight() {
 }, 5000)}
 
 function animateRight() {
-  if (picIndex<=2) {
+  if (picIndex <= (pictureList.length - 1)) {
   document.getElementById('picture2').classList.add('animateRight2')
   document.getElementById('picture3').classList.add('animateRight3')
 }}
