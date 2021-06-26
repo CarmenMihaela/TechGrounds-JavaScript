@@ -13,10 +13,11 @@ h1 {
 
 #container {
     position: relative;
-    /* overflow: hidden; */
+    overflow: hidden;
     width: 60vw;
     height:40vw;
     margin: 1vw auto;
+    border-radius: 8px;
 }
 
 #picture3 {
@@ -36,7 +37,7 @@ h1 {
     height:40vw;
     border-radius: 8px;
     position: absolute;
-    background-image: url("media/image3.jpg");
+    background-image: url("media/image1.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -114,10 +115,14 @@ button:nth-of-type(2) {
     animation-duration: 5s;
 }
 
-.animateLeft {
-    animation-name: moveLeft;
+.animateLeft1 {
+    animation-name: moveLeft1;
     animation-duration: 5s;
-    animation-fill-mode: backwards;
+}
+
+.animateLeft2 {
+    animation-name: moveLeft2;
+    animation-duration: 5s;
 }
 
 
