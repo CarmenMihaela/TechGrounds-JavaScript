@@ -107,22 +107,22 @@ button:nth-of-type(2) {
 
 .animateRight2 {
     animation-name: moveRight2;
-    animation-duration: 5s;
+    animation-duration: 3s;
 }
 
 .animateRight3 {
     animation-name: moveRight3;
-    animation-duration: 5s;
+    animation-duration: 3s;
 }
 
 .animateLeft1 {
     animation-name: moveLeft1;
-    animation-duration: 5s;
+    animation-duration: 3s;
 }
 
 .animateLeft2 {
     animation-name: moveLeft2;
-    animation-duration: 5s;
+    animation-duration: 3s;
 }
 
 
