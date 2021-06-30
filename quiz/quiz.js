@@ -3,6 +3,7 @@ console.log(initialDiv)
 let startButton = document.createElement('button')
 let startButtonText = document.createTextNode("Start")
 
+
 startButton.appendChild(startButtonText)
 startButton.setAttribute("id", "start")
 
@@ -27,9 +28,23 @@ function buildGameLayout() {
     bigContainer.appendChild(subTitle)
 
     let question = document.createElement('h2')
-    let firstNumber = 70
+
+    let operations = ["+", "-", "*", "/"]
+    let firstNumber = 49
     let operation = "-"
-    let secondNumber = 14
+    let secondNumber = 32
+
+    
+    function correctAnswer(firstNumber, operation, secondNumber) {
+        if (operation =="-") {
+            result = firstNumber - secondNumber
+        } else if (operation == "+") {
+            result = firstNumber + secondNumber
+        } return result
+    }
+
+    correctAnswer = correctAnswer(firstNumber, operation, secondNumber)
+
     question.innerHTML = "What is " + firstNumber + " " + operation + " " + secondNumber
     bigContainer.appendChild(question)
 
@@ -42,8 +57,18 @@ function buildGameLayout() {
     firstAnswerContainer.appendChild(firstCircle)
     let firstRectangle = document.createElement('div')
     firstRectangle.classList.add('rectangle1')
-    let firstAnswer = Math.floor(Math.random() * 100)
+
+    let answers = [correctAnswer] // the correct answer is included in the possible answers array
+    while (answers.length < 5) {
+        let answer = Math.floor(Math.random() * 100) + 1
+        if(answers.indexOf(answer) === -1) answers.push(answer) //an array with unique numbers is generated
+    }
+
+    let firstAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
     firstRectangle.innerText = firstAnswer
+    let firstAnswerIndex = answers.indexOf(firstAnswer)
+    answers.splice(firstAnswerIndex, 1) //removing the selected value from the array
+
     firstAnswerContainer.appendChild(firstRectangle)
     bigContainer.appendChild(firstAnswerContainer)
 
@@ -56,10 +81,13 @@ function buildGameLayout() {
     secondCircle.appendChild(secondCircleText)
     secondAnswerContainer.appendChild(secondCircle)
     secondCircle.classList.add('circle2')
-    let secondAnswer 
-    secondAnswer != firstAnswer
-    secondAnswer = Math.floor(Math.random() * 100)
+
+    let secondAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
     secondRectangle.innerText = secondAnswer
+    let secondAnswerIndex = answers.indexOf(secondAnswer)
+    answers.splice(secondAnswerIndex, 1) //removing the selected value from the array
+    console.log(answers)
+    
     secondAnswerContainer.appendChild(secondRectangle)
     bigContainer.appendChild(secondAnswerContainer)
 
@@ -71,10 +99,14 @@ function buildGameLayout() {
     thirdAnswerContainer.appendChild(thirdCircle)
     thirdCircle.classList.add('circle3')
     let thirdRectangle = document.createElement('div')
-    let thirdAnswer 
-    thirdAnswer != secondAnswer != firstAnswer
-    thirdAnswer = Math.floor(Math.random() * 100)
+
+    
+    let thirdAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
     thirdRectangle.innerText = thirdAnswer
+    let thirdAnswerIndex = answers.indexOf(thirdAnswer)
+    answers.splice(thirdAnswerIndex, 1) //removing the selected value from the array
+    console.log(answers)
+
     thirdAnswerContainer.appendChild(thirdRectangle)
     thirdRectangle.classList.add('rectangle3')
     bigContainer.appendChild(thirdAnswerContainer)
@@ -86,11 +118,14 @@ function buildGameLayout() {
     fourthCircle.appendChild(fourthCircleText)
     fourthAnswerContainer.appendChild(fourthCircle)
     let fourthRectangle = document.createElement('div')
-    fourthRectangle.classList.add('rectangle2')
-    let fourthAnswer 
-    fourthAnswer != secondAnswer != firstAnswer != thirdAnswer
-    fourthAnswer = Math.floor(Math.random() * 100)
+
+    let fourthAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
     fourthRectangle.innerText = fourthAnswer
+    let fourthAnswerIndex = answers.indexOf(fourthAnswer)
+    fourthRectangle.classList.add('rectangle2')
+    answers.splice(fourthAnswerIndex, 1) //removing the selected value from the array
+    console.log(answers)
+
     fourthAnswerContainer.appendChild(fourthRectangle)
     bigContainer.appendChild(fourthAnswerContainer)
     fourthCircle.classList.add('circle2')
@@ -105,10 +140,7 @@ function buildGameLayout() {
     fifthAnswerContainer.appendChild(fifthCircle)
     let fifthRectangle = document.createElement('div')
     fifthRectangle.classList.add('rectangle5')
-    let fifthAnswer 
-    fifthAnswer != secondAnswer != firstAnswer != thirdAnswer != fourthAnswer
-    fifthAnswer = Math.floor(Math.random() * 100)
-    fifthRectangle.innerText = fifthAnswer
+    fifthRectangle.innerText = answers[0]
     fifthAnswerContainer.appendChild(fifthRectangle)
     bigContainer.appendChild(fifthAnswerContainer)
 
@@ -125,7 +157,6 @@ function buildGameLayout() {
     document.body.appendChild(nextButton)
     nextButton.classList.add('btn')
     nextButton.setAttribute("id", "next")
-
 }
 
 startButton.addEventListener("click", () => {

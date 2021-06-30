@@ -21,9 +21,9 @@
 
 .container {
     background-color:#01937C;
-    margin: 0.5vw auto;
+    margin: 5vw auto 2vw;
     width: 30vw;
-    height: 85vh;
+    height: 40vw;
 }
 
 h1 {
@@ -126,7 +126,6 @@ h2:nth-of-type(2) {
 #previous {
     margin-left: 44vw;
     margin-right: 0.5vw;
-    margin-top: 1vw;
 
 }
 
