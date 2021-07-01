@@ -2,6 +2,9 @@ let initialDiv = document.getElementById('initial')
 console.log(initialDiv)
 let startButton = document.createElement('button')
 let startButtonText = document.createTextNode("Start")
+let timesPlayed = 0
+let score
+let goodAnswer = 0
 
 
 startButton.appendChild(startButtonText)
@@ -11,6 +14,9 @@ initialDiv.appendChild(startButton)
 startButton.classList.add('btn')
 
 function buildGameLayout() {
+    if(timesPlayed >0) {
+        initialDiv.removeChild(score)
+    }
     initialDiv.removeChild(startButton)
     let bigContainer = document.createElement('div')
     bigContainer.classList.add('container')
@@ -23,8 +29,14 @@ function buildGameLayout() {
     bigContainer.appendChild(title)
 
     let subTitle = document.createElement('h2')
-    let subTitleText = document.createTextNode("1/6")
-    subTitle.appendChild(subTitleText)
+
+    let questionLength = Math.floor(Math.random() * 10) + 6 //the number of questions is between 6 and 15
+
+    let questionIndex = 1
+
+    subTitle.innerText = questionIndex + "/" + questionLength
+    questionIndex++ 
+
     bigContainer.appendChild(subTitle)
 
     let question = document.createElement('h2')
@@ -37,7 +49,6 @@ function buildGameLayout() {
         if(numbers.indexOf(number) === -1) numbers.push(number) //an array with unique positive numbers is generated
     }
 
-    console.log(numbers)
 
     let firstNumber = numbers[0]
     let operation = operations[Math.floor(Math.random() * operations.length)]
@@ -101,7 +112,7 @@ function buildGameLayout() {
     secondRectangle.innerText = secondAnswer
     let secondAnswerIndex = answers.indexOf(secondAnswer)
     answers.splice(secondAnswerIndex, 1) //removing the selected value from the array
-    console.log(answers)
+
     
     secondAnswerContainer.appendChild(secondRectangle)
     bigContainer.appendChild(secondAnswerContainer)
@@ -142,7 +153,6 @@ function buildGameLayout() {
     let fourthAnswerIndex = answers.indexOf(fourthAnswer)
     fourthRectangle.classList.add('rectangle2')
     answers.splice(fourthAnswerIndex, 1) //removing the selected value from the array
-    console.log(answers)
 
     fourthAnswerContainer.appendChild(fourthRectangle)
     bigContainer.appendChild(fourthAnswerContainer)
@@ -184,6 +194,7 @@ function checkAnswerFifth(event) {
 if (event.currentTarget.innerText == correctAnswer) {
     event.currentTarget.style.backgroundColor = 'green'
     fifthCircle.style.backgroundColor = 'green'
+    goodAnswer++
 } else {event.currentTarget.style.backgroundColor = 'red'
 fifthCircle.style.backgroundColor = 'red'
 if (firstAnswer == correctAnswer) {
@@ -210,6 +221,7 @@ function checkAnswerFourth(event) {
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         fourthCircle.style.backgroundColor = 'green'
+        goodAnswer++
     } else {event.currentTarget.style.backgroundColor = 'red'
     fourthCircle.style.backgroundColor = 'red'
     if (firstAnswer == correctAnswer) {
@@ -237,6 +249,7 @@ function checkAnswerThird(event) {
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         thirdCircle.style.backgroundColor = 'green'
+        goodAnswer++
     } else {event.currentTarget.style.backgroundColor = 'red'
     thirdCircle.style.backgroundColor = 'red'
     if (firstAnswer == correctAnswer) {
@@ -264,6 +277,7 @@ function checkAnswerSecond(event) {
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
+        goodAnswer++
     } else {event.currentTarget.style.backgroundColor = 'red'
     secondCircle.style.backgroundColor = 'red'
     if (firstAnswer == correctAnswer) {
@@ -291,15 +305,16 @@ function checkAnswerFirst(event) {
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
+        goodAnswer++
     } else {event.currentTarget.style.backgroundColor = 'red'
     firstCircle.style.backgroundColor = 'red'
     if (secondAnswer == correctAnswer) {
         secondRectangle.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
     }
-    if (secondAnswer == correctAnswer) {
-        secondRectangle.style.backgroundColor = 'green'
-        secondCircle.style.backgroundColor = 'green'
+    if (thirdAnswer == correctAnswer) {
+        thirdRectangle.style.backgroundColor = 'green'
+        thirdCircle.style.backgroundColor = 'green'
     }
     if (fourthAnswer == correctAnswer) {
         fourthRectangle.style.backgroundColor = 'green'
@@ -315,22 +330,254 @@ firstRectangle.addEventListener("click", () => {
     })
 
 
-let 
-questionNumber = [1, 2, 3, 4, 5, 6]
-let questionIndex = 1
+
 
 function showQuestionNumber() {
-    subTitle.innerText = questionNumber[questionIndex] + "/" + questionNumber.length
-    questionIndex++ 
-    if (questionIndex >= questionNumber.length) {
-        questionIndex = questionNumber.length-1
+    if (questionIndex <= questionLength) {
+        subTitle.innerText = questionIndex + "/" + questionLength 
     }
 }
 
+function nextQuestion() {
+    if (questionIndex <= questionLength) {
+    operations = ["+", "-"]
+    numbers = []
+
+    while (numbers.length < 2) {
+        let number = Math.floor(Math.random() * 100) + 1
+        if(numbers.indexOf(number) === -1) numbers.push(number) //an array with unique positive numbers is generated
+    }
+
+
+    firstNumber = numbers[0]
+    operation = operations[Math.floor(Math.random() * operations.length)]
+    secondNumber = numbers[1]
+
+    question.innerText = "What is " + firstNumber + " " + operation + " " + secondNumber
+    questionIndex++ 
+    firstRectangle.style.backgroundColor = 'white'
+    secondRectangle.style.backgroundColor = 'white'
+    thirdRectangle.style.backgroundColor = 'white'
+    fourthRectangle.style.backgroundColor = 'white'
+    fifthRectangle.style.backgroundColor = 'white'
+
+    firstCircle.style.backgroundColor = 'white'
+    secondCircle.style.backgroundColor = 'white'
+    thirdCircle.style.backgroundColor = 'white'
+    fourthCircle.style.backgroundColor = 'white'
+    fifthCircle.style.backgroundColor = 'white'
+
+        function correctAnswer(firstNumber, operation, secondNumber) {
+            if (operation =="-") {
+                result = firstNumber - secondNumber
+            } else if (operation == "+") {
+                result = firstNumber + secondNumber
+             } return result
+        }
+    
+        correctAnswer = correctAnswer(firstNumber, operation, secondNumber)
+        answers = [correctAnswer] // the correct answer is included in the possible answers array
+        while (answers.length < 5) {
+            let answer = Math.floor(Math.random() * 200) + 1
+            answer *= Math.round(Math.random()) ? 1 : -1
+            if(answers.indexOf(answer) === -1) answers.push(answer) //an array with unique positive and negative numbers is generated
+        }
+    
+        firstAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+        firstRectangle.innerText = firstAnswer
+        firstAnswerIndex = answers.indexOf(firstAnswer)
+        answers.splice(firstAnswerIndex, 1) //removing the selected value from the array 
+
+
+        secondAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+        secondRectangle.innerText = secondAnswer
+        secondAnswerIndex = answers.indexOf(secondAnswer)
+        answers.splice(secondAnswerIndex, 1) //removing the selected value from the array
+
+
+        thirdAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+        thirdRectangle.innerText = thirdAnswer
+        thirdAnswerIndex = answers.indexOf(thirdAnswer)
+        answers.splice(thirdAnswerIndex, 1) //removing the selected value from the array
+
+
+        fourthAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+        fourthRectangle.innerText = fourthAnswer
+        fourthAnswerIndex = answers.indexOf(fourthAnswer)
+        fourthRectangle.classList.add('rectangle2')
+        answers.splice(fourthAnswerIndex, 1) //removing the selected value from the array
+
+
+        fifthAnswer = answers[0]
+        fifthRectangle.innerText = fifthAnswer
+
+
+        function checkAnswerFifth(event) {
+            if (event.currentTarget.innerText == correctAnswer) {
+                event.currentTarget.style.backgroundColor = 'green'
+                fifthCircle.style.backgroundColor = 'green'
+                goodAnswer++
+            } else {event.currentTarget.style.backgroundColor = 'red'
+            fifthCircle.style.backgroundColor = 'red'
+            if (firstAnswer == correctAnswer) {
+                firstRectangle.style.backgroundColor = 'green'
+                firstCircle.style.backgroundColor = 'green'
+            }
+            if (secondAnswer == correctAnswer) {
+                secondRectangle.style.backgroundColor = 'green'
+                secondCircle.style.backgroundColor = 'green'
+            }
+            if (thirdAnswer == correctAnswer) {
+                thirdRectangle.style.backgroundColor = 'green'
+                thirdCircle.style.backgroundColor = 'green'
+            }
+            if (fourthAnswer == correctAnswer) {
+                fourthRectangle.style.backgroundColor = 'green'
+                fourthCircle.style.backgroundColor = 'green'
+            }}}
+            
+            fifthRectangle.addEventListener("click", () => {
+                checkAnswerFifth(event)
+            })
+            function checkAnswerFourth(event) {
+                if (event.currentTarget.innerText == correctAnswer) {
+                    event.currentTarget.style.backgroundColor = 'green'
+                    fourthCircle.style.backgroundColor = 'green'
+                    goodAnswer++
+                } else {event.currentTarget.style.backgroundColor = 'red'
+                fourthCircle.style.backgroundColor = 'red'
+                if (firstAnswer == correctAnswer) {
+                    firstRectangle.style.backgroundColor = 'green'
+                    firstCircle.style.backgroundColor = 'green'
+                }
+                if (secondAnswer == correctAnswer) {
+                    secondRectangle.style.backgroundColor = 'green'
+                    secondCircle.style.backgroundColor = 'green'
+                }
+                if (thirdAnswer == correctAnswer) {
+                    thirdRectangle.style.backgroundColor = 'green'
+                    thirdCircle.style.backgroundColor = 'green'
+                }
+                if (fifthAnswer == correctAnswer) {
+                    fifthRectangle.style.backgroundColor = 'green'
+                    fifthCircle.style.backgroundColor = 'green'
+                }}}
+                
+                fourthRectangle.addEventListener("click", () => {
+                    checkAnswerFourth(event)
+                })
+            
+            function checkAnswerThird(event) {
+                if (event.currentTarget.innerText == correctAnswer) {
+                    event.currentTarget.style.backgroundColor = 'green'
+                    thirdCircle.style.backgroundColor = 'green'
+                    goodAnswer++
+                } else {event.currentTarget.style.backgroundColor = 'red'
+                thirdCircle.style.backgroundColor = 'red'
+                if (firstAnswer == correctAnswer) {
+                    firstRectangle.style.backgroundColor = 'green'
+                    firstCircle.style.backgroundColor = 'green'
+                }
+                if (secondAnswer == correctAnswer) {
+                    secondRectangle.style.backgroundColor = 'green'
+                    secondCircle.style.backgroundColor = 'green'
+                }
+                if (fourthAnswer == correctAnswer) {
+                    fourthRectangle.style.backgroundColor = 'green'
+                    fourthCircle.style.backgroundColor = 'green'
+                }
+                if (fifthAnswer == correctAnswer) {
+                    fifthRectangle.style.backgroundColor = 'green'
+                    fifthCircle.style.backgroundColor = 'green'
+                }}}
+                
+            thirdRectangle.addEventListener("click", () => {
+                    checkAnswerThird(event)
+                })
+            
+            function checkAnswerSecond(event) {
+                if (event.currentTarget.innerText == correctAnswer) {
+                    event.currentTarget.style.backgroundColor = 'green'
+                    secondCircle.style.backgroundColor = 'green'
+                    goodAnswer++
+                } else {event.currentTarget.style.backgroundColor = 'red'
+                secondCircle.style.backgroundColor = 'red'
+                if (firstAnswer == correctAnswer) {
+                    firstRectangle.style.backgroundColor = 'green'
+                    firstCircle.style.backgroundColor = 'green'
+                }
+                if (thirdAnswer == correctAnswer) {
+                    thirdRectangle.style.backgroundColor = 'green'
+                    thirdCircle.style.backgroundColor = 'green'
+                }
+                if (fourthAnswer == correctAnswer) {
+                    fourthRectangle.style.backgroundColor = 'green'
+                    fourthCircle.style.backgroundColor = 'green'
+                }
+                if (fifthAnswer == correctAnswer) {
+                    fifthRectangle.style.backgroundColor = 'green'
+                    fifthCircle.style.backgroundColor = 'green'
+                }}}
+                
+            secondRectangle.addEventListener("click", () => {
+                    checkAnswerSecond(event)
+                })
+            
+            function checkAnswerFirst(event) {
+                if (event.currentTarget.innerText == correctAnswer) {
+                    event.currentTarget.style.backgroundColor = 'green'
+                    firstCircle.style.backgroundColor = 'green'
+                    goodAnswer++
+                } else {event.currentTarget.style.backgroundColor = 'red'
+                firstCircle.style.backgroundColor = 'red'
+                if (secondAnswer == correctAnswer) {
+                    secondRectangle.style.backgroundColor = 'green'
+                    secondCircle.style.backgroundColor = 'green'
+                }
+                if (thirdAnswer == correctAnswer) {
+                    thirdRectangle.style.backgroundColor = 'green'
+                    thirdCircle.style.backgroundColor = 'green'
+                }
+                if (fourthAnswer == correctAnswer) {
+                    fourthRectangle.style.backgroundColor = 'green'
+                    fourthCircle.style.backgroundColor = 'green'
+                }
+                if (fifthAnswer == correctAnswer) {
+                    fifthRectangle.style.backgroundColor = 'green'
+                    fifthCircle.style.backgroundColor = 'green'
+                }}}
+                
+            firstRectangle.addEventListener("click", () => {
+                    checkAnswerFirst(event)
+                })}else {initialDiv.removeChild(bigContainer)
+                        document.body.removeChild(previousButton)
+                        document.body.removeChild(nextButton)
+
+                        score = document.createElement('p')
+                        score.style.backgroundColor = "transparent"
+                        let message
+                        if (goodAnswer > 0){
+                            message = "Congratulations! You answered correctly to " + goodAnswer + " out of " + questionLength + " questions."
+                        }
+                        if (goodAnswer == 0){
+                            message = "You idid not answer correctly to any of the questions. Try again!"
+                        }
+
+                        score.innerText = message
+                        initialDiv.appendChild(score)
+                        timesPlayed++
+
+                        initialDiv.appendChild(startButton)
+                        startButton.innerText = "Restart"
+
+}
+    
+}
 
 
 nextButton.addEventListener("click", () => {
     showQuestionNumber()
+    nextQuestion()
 })
 
 }
