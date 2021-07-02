@@ -5,7 +5,8 @@ let startButtonText = document.createTextNode("Start")
 let timesPlayed = 0
 let score
 let goodAnswer = 0
-
+let isClicked = "no" //on-off switch so that once a choice is made, it cannot be changed or counted more than once
+clickedList = []
 
 startButton.appendChild(startButtonText)
 startButton.setAttribute("id", "start")
@@ -30,7 +31,7 @@ function buildGameLayout() {
 
     let subTitle = document.createElement('h2')
 
-    let questionLength = Math.floor(Math.random() * 10) + 6 //the number of questions is between 6 and 15
+    let questionLength = Math.floor(Math.random() * 10)+1 //the number of questions is between 1 and 10
 
     let questionIndex = 1
 
@@ -191,12 +192,18 @@ function buildGameLayout() {
     nextButton.setAttribute("id", "next")
 
 function checkAnswerFifth(event) {
+    if (isClicked == "no") {
 if (event.currentTarget.innerText == correctAnswer) {
     event.currentTarget.style.backgroundColor = 'green'
     fifthCircle.style.backgroundColor = 'green'
-    goodAnswer++
+        goodAnswer++
+    isClicked = "yes"
+    clickedList.push(isClicked)
 } else {event.currentTarget.style.backgroundColor = 'red'
 fifthCircle.style.backgroundColor = 'red'
+isClicked = "yes"
+clickedList.push(isClicked)
+console.log(isClicked, clickedList)
 if (firstAnswer == correctAnswer) {
     firstRectangle.style.backgroundColor = 'green'
     firstCircle.style.backgroundColor = 'green'
@@ -212,18 +219,24 @@ if (thirdAnswer == correctAnswer) {
 if (fourthAnswer == correctAnswer) {
     fourthRectangle.style.backgroundColor = 'green'
     fourthCircle.style.backgroundColor = 'green'
-}}}
+}}}}
 
 fifthRectangle.addEventListener("click", () => {
     checkAnswerFifth(event)
 })
 function checkAnswerFourth(event) {
+    if (isClicked == "no"){
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         fourthCircle.style.backgroundColor = 'green'
         goodAnswer++
+    isClicked = "yes"
+    clickedList.push(isClicked)
     } else {event.currentTarget.style.backgroundColor = 'red'
     fourthCircle.style.backgroundColor = 'red'
+    isClicked = "yes"
+    clickedList.push(isClicked)
+    console.log(isClicked, clickedList)
     if (firstAnswer == correctAnswer) {
         firstRectangle.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
@@ -239,19 +252,25 @@ function checkAnswerFourth(event) {
     if (fifthAnswer == correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-    }}}
+    }}}}
     
     fourthRectangle.addEventListener("click", () => {
         checkAnswerFourth(event)
     })
 
 function checkAnswerThird(event) {
+    if (isClicked == "no"){
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         thirdCircle.style.backgroundColor = 'green'
         goodAnswer++
+        isClicked = "yes"
+        clickedList.push(isClicked)
     } else {event.currentTarget.style.backgroundColor = 'red'
     thirdCircle.style.backgroundColor = 'red'
+    isClicked = "yes"
+    clickedList.push(isClicked)
+    console.log(isClicked, clickedList)
     if (firstAnswer == correctAnswer) {
         firstRectangle.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
@@ -267,19 +286,25 @@ function checkAnswerThird(event) {
     if (fifthAnswer == correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-    }}}
+    }}}}
     
 thirdRectangle.addEventListener("click", () => {
         checkAnswerThird(event)
     })
 
 function checkAnswerSecond(event) {
+    if (isClicked == "no") {
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
         goodAnswer++
+        isClicked = "yes"
+        clickedList.push(isClicked)
     } else {event.currentTarget.style.backgroundColor = 'red'
     secondCircle.style.backgroundColor = 'red'
+    isClicked = "yes"
+    clickedList.push(isClicked)
+    console.log(isClicked, clickedList)
     if (firstAnswer == correctAnswer) {
         firstRectangle.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
@@ -295,19 +320,24 @@ function checkAnswerSecond(event) {
     if (fifthAnswer == correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-    }}}
+    }}}}
     
 secondRectangle.addEventListener("click", () => {
         checkAnswerSecond(event)
     })
 
 function checkAnswerFirst(event) {
+    if (isClicked == "no") {
     if (event.currentTarget.innerText == correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
-        goodAnswer++
+        if(rectangle1IsClicked == 0) {goodAnswer++}
+        rectangle1IsClicked = 1
     } else {event.currentTarget.style.backgroundColor = 'red'
     firstCircle.style.backgroundColor = 'red'
+    isClicked = "yes"
+    clickedList.push(isClicked)
+    console.log(isClicked, clickedList)
     if (secondAnswer == correctAnswer) {
         secondRectangle.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
@@ -323,7 +353,7 @@ function checkAnswerFirst(event) {
     if (fifthAnswer == correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-    }}}
+    }}}}
     
 firstRectangle.addEventListener("click", () => {
         checkAnswerFirst(event)
@@ -339,6 +369,11 @@ function showQuestionNumber() {
 }
 
 function nextQuestion() {
+rectangle1IsClicked = 0 
+rectangle2IsClicked = 0
+rectangle3IsClicked = 0
+rectangle4IsClicked = 0
+rectangle5IsClicked = 0
     if (questionIndex <= questionLength) {
     operations = ["+", "-"]
     numbers = []
@@ -410,157 +445,173 @@ function nextQuestion() {
 
         fifthAnswer = answers[0]
         fifthRectangle.innerText = fifthAnswer
+        isClicked = "no"
 
 
-        function checkAnswerFifth(event) {
-            if (event.currentTarget.innerText == correctAnswer) {
-                event.currentTarget.style.backgroundColor = 'green'
-                fifthCircle.style.backgroundColor = 'green'
-                goodAnswer++
-            } else {event.currentTarget.style.backgroundColor = 'red'
-            fifthCircle.style.backgroundColor = 'red'
-            if (firstAnswer == correctAnswer) {
-                firstRectangle.style.backgroundColor = 'green'
-                firstCircle.style.backgroundColor = 'green'
-            }
-            if (secondAnswer == correctAnswer) {
-                secondRectangle.style.backgroundColor = 'green'
-                secondCircle.style.backgroundColor = 'green'
-            }
-            if (thirdAnswer == correctAnswer) {
-                thirdRectangle.style.backgroundColor = 'green'
-                thirdCircle.style.backgroundColor = 'green'
-            }
-            if (fourthAnswer == correctAnswer) {
-                fourthRectangle.style.backgroundColor = 'green'
-                fourthCircle.style.backgroundColor = 'green'
-            }}}
+        // function checkAnswerFifth(event) {
             
-            fifthRectangle.addEventListener("click", () => {
-                checkAnswerFifth(event)
-            })
-            function checkAnswerFourth(event) {
-                if (event.currentTarget.innerText == correctAnswer) {
-                    event.currentTarget.style.backgroundColor = 'green'
-                    fourthCircle.style.backgroundColor = 'green'
-                    goodAnswer++
-                } else {event.currentTarget.style.backgroundColor = 'red'
-                fourthCircle.style.backgroundColor = 'red'
-                if (firstAnswer == correctAnswer) {
-                    firstRectangle.style.backgroundColor = 'green'
-                    firstCircle.style.backgroundColor = 'green'
-                }
-                if (secondAnswer == correctAnswer) {
-                    secondRectangle.style.backgroundColor = 'green'
-                    secondCircle.style.backgroundColor = 'green'
-                }
-                if (thirdAnswer == correctAnswer) {
-                    thirdRectangle.style.backgroundColor = 'green'
-                    thirdCircle.style.backgroundColor = 'green'
-                }
-                if (fifthAnswer == correctAnswer) {
-                    fifthRectangle.style.backgroundColor = 'green'
-                    fifthCircle.style.backgroundColor = 'green'
-                }}}
-                
-                fourthRectangle.addEventListener("click", () => {
-                    checkAnswerFourth(event)
-                })
+        //     if (event.currentTarget.innerText == correctAnswer) {
+        //         event.currentTarget.style.backgroundColor = 'green'
+        //         fifthCircle.style.backgroundColor = 'green'
+        //         goodAnswer++
+        //         isClicked = "yes"
+        //         clickedList.push(isClicked)
+        //         console.log(isClicked, clickedList)
+        //     } else {event.currentTarget.style.backgroundColor = 'red'
+        //     fifthCircle.style.backgroundColor = 'red'
+        //     isClicked = "yes"
+        //     clickedList.push(isClicked)
+        //     console.log(isClicked,clickedList)
+        //     if (firstAnswer == correctAnswer) {
+        //         firstRectangle.style.backgroundColor = 'green'
+        //         firstCircle.style.backgroundColor = 'green'
+        //     }
+        //     if (secondAnswer == correctAnswer) {
+        //         secondRectangle.style.backgroundColor = 'green'
+        //         secondCircle.style.backgroundColor = 'green'
+        //     }
+        //     if (thirdAnswer == correctAnswer) {
+        //         thirdRectangle.style.backgroundColor = 'green'
+        //         thirdCircle.style.backgroundColor = 'green'
+        //     }
+        //     if (fourthAnswer == correctAnswer) {
+        //         fourthRectangle.style.backgroundColor = 'green'
+        //         fourthCircle.style.backgroundColor = 'green'
+        //     }}}
             
-            function checkAnswerThird(event) {
-                if (event.currentTarget.innerText == correctAnswer) {
-                    event.currentTarget.style.backgroundColor = 'green'
-                    thirdCircle.style.backgroundColor = 'green'
-                    goodAnswer++
-                } else {event.currentTarget.style.backgroundColor = 'red'
-                thirdCircle.style.backgroundColor = 'red'
-                if (firstAnswer == correctAnswer) {
-                    firstRectangle.style.backgroundColor = 'green'
-                    firstCircle.style.backgroundColor = 'green'
-                }
-                if (secondAnswer == correctAnswer) {
-                    secondRectangle.style.backgroundColor = 'green'
-                    secondCircle.style.backgroundColor = 'green'
-                }
-                if (fourthAnswer == correctAnswer) {
-                    fourthRectangle.style.backgroundColor = 'green'
-                    fourthCircle.style.backgroundColor = 'green'
-                }
-                if (fifthAnswer == correctAnswer) {
-                    fifthRectangle.style.backgroundColor = 'green'
-                    fifthCircle.style.backgroundColor = 'green'
-                }}}
+        //     fifthRectangle.addEventListener("click", () => {
+        //         checkAnswerFifth(event)
+        //     })
+        //     function checkAnswerFourth(event) {
+        //         if (event.currentTarget.innerText == correctAnswer) {
+        //             event.currentTarget.style.backgroundColor = 'green'
+        //             fourthCircle.style.backgroundColor = 'green'
+        //             if(rectangle4IsClicked == 0) {goodAnswer++}
+        //             rectangle4IsClicked = 1
+        //         } else {event.currentTarget.style.backgroundColor = 'red'
+        //         fourthCircle.style.backgroundColor = 'red'
+        //         if (firstAnswer == correctAnswer) {
+        //             firstRectangle.style.backgroundColor = 'green'
+        //             firstCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (secondAnswer == correctAnswer) {
+        //             secondRectangle.style.backgroundColor = 'green'
+        //             secondCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (thirdAnswer == correctAnswer) {
+        //             thirdRectangle.style.backgroundColor = 'green'
+        //             thirdCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (fifthAnswer == correctAnswer) {
+        //             fifthRectangle.style.backgroundColor = 'green'
+        //             fifthCircle.style.backgroundColor = 'green'
+        //         }}}
                 
-            thirdRectangle.addEventListener("click", () => {
-                    checkAnswerThird(event)
-                })
+        //         fourthRectangle.addEventListener("click", () => {
+        //             checkAnswerFourth(event)
+        //         })
             
-            function checkAnswerSecond(event) {
-                if (event.currentTarget.innerText == correctAnswer) {
-                    event.currentTarget.style.backgroundColor = 'green'
-                    secondCircle.style.backgroundColor = 'green'
-                    goodAnswer++
-                } else {event.currentTarget.style.backgroundColor = 'red'
-                secondCircle.style.backgroundColor = 'red'
-                if (firstAnswer == correctAnswer) {
-                    firstRectangle.style.backgroundColor = 'green'
-                    firstCircle.style.backgroundColor = 'green'
-                }
-                if (thirdAnswer == correctAnswer) {
-                    thirdRectangle.style.backgroundColor = 'green'
-                    thirdCircle.style.backgroundColor = 'green'
-                }
-                if (fourthAnswer == correctAnswer) {
-                    fourthRectangle.style.backgroundColor = 'green'
-                    fourthCircle.style.backgroundColor = 'green'
-                }
-                if (fifthAnswer == correctAnswer) {
-                    fifthRectangle.style.backgroundColor = 'green'
-                    fifthCircle.style.backgroundColor = 'green'
-                }}}
+        //     function checkAnswerThird(event) {
+        //         if (event.currentTarget.innerText == correctAnswer) {
+        //             event.currentTarget.style.backgroundColor = 'green'
+        //             thirdCircle.style.backgroundColor = 'green'
+        //             if(rectangle3IsClicked == 0) {goodAnswer++}
+        //             rectangle3IsClicked = 1
+        //         } else {event.currentTarget.style.backgroundColor = 'red'
+        //         thirdCircle.style.backgroundColor = 'red'
+        //         if (firstAnswer == correctAnswer) {
+        //             firstRectangle.style.backgroundColor = 'green'
+        //             firstCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (secondAnswer == correctAnswer) {
+        //             secondRectangle.style.backgroundColor = 'green'
+        //             secondCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (fourthAnswer == correctAnswer) {
+        //             fourthRectangle.style.backgroundColor = 'green'
+        //             fourthCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (fifthAnswer == correctAnswer) {
+        //             fifthRectangle.style.backgroundColor = 'green'
+        //             fifthCircle.style.backgroundColor = 'green'
+        //         }}}
                 
-            secondRectangle.addEventListener("click", () => {
-                    checkAnswerSecond(event)
-                })
+        //     thirdRectangle.addEventListener("click", () => {
+        //             checkAnswerThird(event)
+        //         })
             
-            function checkAnswerFirst(event) {
-                if (event.currentTarget.innerText == correctAnswer) {
-                    event.currentTarget.style.backgroundColor = 'green'
-                    firstCircle.style.backgroundColor = 'green'
-                    goodAnswer++
-                } else {event.currentTarget.style.backgroundColor = 'red'
-                firstCircle.style.backgroundColor = 'red'
-                if (secondAnswer == correctAnswer) {
-                    secondRectangle.style.backgroundColor = 'green'
-                    secondCircle.style.backgroundColor = 'green'
-                }
-                if (thirdAnswer == correctAnswer) {
-                    thirdRectangle.style.backgroundColor = 'green'
-                    thirdCircle.style.backgroundColor = 'green'
-                }
-                if (fourthAnswer == correctAnswer) {
-                    fourthRectangle.style.backgroundColor = 'green'
-                    fourthCircle.style.backgroundColor = 'green'
-                }
-                if (fifthAnswer == correctAnswer) {
-                    fifthRectangle.style.backgroundColor = 'green'
-                    fifthCircle.style.backgroundColor = 'green'
-                }}}
+        //     function checkAnswerSecond(event) {
+        //         if (event.currentTarget.innerText == correctAnswer) {
+        //             event.currentTarget.style.backgroundColor = 'green'
+        //             secondCircle.style.backgroundColor = 'green'
+        //             if(rectangle2IsClicked == 0) {goodAnswer++}
+        //             rectangle2IsClicked = 1
+        //         } else {event.currentTarget.style.backgroundColor = 'red'
+        //         secondCircle.style.backgroundColor = 'red'
+        //         if (firstAnswer == correctAnswer) {
+        //             firstRectangle.style.backgroundColor = 'green'
+        //             firstCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (thirdAnswer == correctAnswer) {
+        //             thirdRectangle.style.backgroundColor = 'green'
+        //             thirdCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (fourthAnswer == correctAnswer) {
+        //             fourthRectangle.style.backgroundColor = 'green'
+        //             fourthCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (fifthAnswer == correctAnswer) {
+        //             fifthRectangle.style.backgroundColor = 'green'
+        //             fifthCircle.style.backgroundColor = 'green'
+        //         }}}
                 
-            firstRectangle.addEventListener("click", () => {
-                    checkAnswerFirst(event)
-                })}else {initialDiv.removeChild(bigContainer)
+        //     secondRectangle.addEventListener("click", () => {
+        //             checkAnswerSecond(event)
+        //         })
+            
+        //     function checkAnswerFirst(event) {
+        //         if (event.currentTarget.innerText == correctAnswer) {
+        //             event.currentTarget.style.backgroundColor = 'green'
+        //             firstCircle.style.backgroundColor = 'green'
+        //             if(rectangle1IsClicked == 0) {goodAnswer++}
+        //             rectangle1IsClicked = 1
+        //         } else {event.currentTarget.style.backgroundColor = 'red'
+        //         firstCircle.style.backgroundColor = 'red'
+        //         if (secondAnswer == correctAnswer) {
+        //             secondRectangle.style.backgroundColor = 'green'
+        //             secondCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (thirdAnswer == correctAnswer) {
+        //             thirdRectangle.style.backgroundColor = 'green'
+        //             thirdCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (fourthAnswer == correctAnswer) {
+        //             fourthRectangle.style.backgroundColor = 'green'
+        //             fourthCircle.style.backgroundColor = 'green'
+        //         }
+        //         if (fifthAnswer == correctAnswer) {
+        //             fifthRectangle.style.backgroundColor = 'green'
+        //             fifthCircle.style.backgroundColor = 'green'
+        //         }}}
+                
+        //     firstRectangle.addEventListener("click", () => {
+        //             checkAnswerFirst(event)
+        //         })
+            }else {initialDiv.removeChild(bigContainer)
                         document.body.removeChild(previousButton)
                         document.body.removeChild(nextButton)
 
                         score = document.createElement('p')
                         score.style.backgroundColor = "transparent"
                         let message
+                        if(goodAnswer > questionLength) {
+                            goodAnswer = questionLength
+                        }
                         if (goodAnswer > 0){
                             message = "Congratulations! You answered correctly to " + goodAnswer + " out of " + questionLength + " questions."
                         }
                         if (goodAnswer == 0){
-                            message = "You idid not answer correctly to any of the questions. Try again!"
+                            message = "You did not answer correctly to any of the questions. Try again!"
                         }
 
                         score.innerText = message
