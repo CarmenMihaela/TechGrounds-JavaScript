@@ -130,6 +130,10 @@ h2:nth-of-type(2) {
 
 }
 
+#previous:hover, #next:hover {
+    background-color: aquamarine;
+}
+
 p {
     color:#01937C;
     font-size: 2vw;
