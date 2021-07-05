@@ -33,43 +33,8 @@ function buildGameLayout() {
     bigContainer.appendChild(title)
 
     let subTitle = document.createElement('h2')
-
-    let numberOfQuestions = Math.floor(Math.random() * 10)+1 //the number of questions is between 1 and 10
-
-    let questionIndex = 1
-
-    subTitle.innerText = questionIndex + "/" + numberOfQuestions
-    
-
     bigContainer.appendChild(subTitle)
-
     let question = document.createElement('h2')
-
-    let operations = ["+", "-"]
-    let numbers = []
-
-    while (numbers.length < 2) {
-        let number = Math.floor(Math.random() * 100) + 1
-        if(numbers.indexOf(number) === -1) numbers.push(number) //an array with unique positive numbers is generated
-    }
-
-
-    let firstNumber = numbers[0]
-    let operation = operations[Math.floor(Math.random() * operations.length)]
-    let secondNumber = numbers[1]
-
-    
-    function correctAnswer(firstNumber, operation, secondNumber) {
-        if (operation =="-") {
-            result = firstNumber - secondNumber
-        } else if (operation == "+") {
-            result = firstNumber + secondNumber
-         } return result
-    }
-
-    correctAnswer = correctAnswer(firstNumber, operation, secondNumber)
-
-    question.innerHTML = "What is " + firstNumber + " " + operation + " " + secondNumber
     bigContainer.appendChild(question)
 
     let firstAnswerContainer = document.createElement('div')
@@ -81,19 +46,6 @@ function buildGameLayout() {
     firstAnswerContainer.appendChild(firstCircle)
     let firstRectangle = document.createElement('div')
     firstRectangle.classList.add('rectangle1')
-
-    let answers = [correctAnswer] // the correct answer is included in the possible answers array
-    while (answers.length < 5) {
-        let answer = Math.floor(Math.random() * 200) + 1
-        answer *= Math.round(Math.random()) ? 1 : -1
-        if(answers.indexOf(answer) === -1) answers.push(answer) //an array with unique positive and negative numbers is generated
-    }
-
-    let firstAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
-    firstRectangle.innerText = firstAnswer
-    let firstAnswerIndex = answers.indexOf(firstAnswer)
-    answers.splice(firstAnswerIndex, 1) //removing the selected value from the array
-
     firstAnswerContainer.appendChild(firstRectangle)
     bigContainer.appendChild(firstAnswerContainer)
 
@@ -107,15 +59,6 @@ function buildGameLayout() {
     secondCircle.appendChild(secondCircleText)
     secondAnswerContainer.appendChild(secondCircle)
     secondCircle.classList.add('circle2')
-    secondRectangle.setAttribute("id", "secondr")
-    secondCircle.setAttribute("id", "secondc")
-
-    let secondAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
-    secondRectangle.innerText = secondAnswer
-    let secondAnswerIndex = answers.indexOf(secondAnswer)
-    answers.splice(secondAnswerIndex, 1) //removing the selected value from the array
-
-    
     secondAnswerContainer.appendChild(secondRectangle)
     bigContainer.appendChild(secondAnswerContainer)
 
@@ -127,15 +70,6 @@ function buildGameLayout() {
     thirdAnswerContainer.appendChild(thirdCircle)
     thirdCircle.classList.add('circle3')
     let thirdRectangle = document.createElement('div')
-    thirdRectangle.setAttribute("id", "thirdr")
-    thirdCircle.setAttribute("id", "thirdc")
-
-    
-    let thirdAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
-    thirdRectangle.innerText = thirdAnswer
-    let thirdAnswerIndex = answers.indexOf(thirdAnswer)
-    answers.splice(thirdAnswerIndex, 1) //removing the selected value from the array
-
     thirdAnswerContainer.appendChild(thirdRectangle)
     thirdRectangle.classList.add('rectangle3')
     bigContainer.appendChild(thirdAnswerContainer)
@@ -147,20 +81,10 @@ function buildGameLayout() {
     fourthCircle.appendChild(fourthCircleText)
     fourthAnswerContainer.appendChild(fourthCircle)
     let fourthRectangle = document.createElement('div')
-    fourthRectangle.setAttribute("id", "fourthr")
-    fourthCircle.setAttribute("id", "fourthc")
-
-    let fourthAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
-    fourthRectangle.innerText = fourthAnswer
-    let fourthAnswerIndex = answers.indexOf(fourthAnswer)
     fourthRectangle.classList.add('rectangle2')
-    answers.splice(fourthAnswerIndex, 1) //removing the selected value from the array
-
     fourthAnswerContainer.appendChild(fourthRectangle)
     bigContainer.appendChild(fourthAnswerContainer)
     fourthCircle.classList.add('circle2')
-    
-
     let fifthAnswerContainer = document.createElement('div')
     fifthAnswerContainer.classList.add('answerContainer')
     let fifthCircle = document.createElement('div')
@@ -170,9 +94,6 @@ function buildGameLayout() {
     fifthAnswerContainer.appendChild(fifthCircle)
     let fifthRectangle = document.createElement('div')
     fifthRectangle.classList.add('rectangle5')
-
-    let fifthAnswer = answers[0]
-    fifthRectangle.innerText = fifthAnswer
     fifthAnswerContainer.appendChild(fifthRectangle)
     bigContainer.appendChild(fifthAnswerContainer)
 
@@ -191,86 +112,129 @@ function buildGameLayout() {
     nextButton.setAttribute("id", "next")
 
     let questions = []
-    for (i=0; i<numberOfQuestions; i++) {
-    let Question1 = new Object()
-    Question1.numberOfQuestions = numberOfQuestions
-    Question1.questionIndex = questionIndex
-    Question1.firstNumber = firstNumber
-    Question1.secondNumber = secondNumber
-    Question1.operation = operation
-    Question1.correctAnswer = correctAnswer(firstNumber, operation, secondNumber)
-    Question1.firstAnswer = firstAnswer
-    Question1.secondAnswer = secondAnswer
-    Question1.thirdAnswer = thirdAnswer
-    Question1.fourthAnswer = fourthAnswer
-    Question1.fifthAnswer = fifthAnswer
-    Question1.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
-    Question1.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
-    Question1.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
-    Question1.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
-    Question1.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+    let numberOfQuestions = Math.floor(Math.random() * 10)+1 //the number of questions is between 1 and 10
+    let questionIndex = 1
 
-    questions.push(Question1)
+
+
+    for (i=0; i<numberOfQuestions; i++) {
+        let operations = ["+", "-"]
+        let numbers = []
+     
+         while (numbers.length < 2) {
+             let number = Math.floor(Math.random() * 100) + 1
+             if(numbers.indexOf(number) === -1) numbers.push(number) //an array with unique positive numbers is generated
+         }
+     
+     
+         let firstNumber = numbers[0]
+         let operation = operations[Math.floor(Math.random() * operations.length)]
+         let secondNumber = numbers[1]
+         
+         function correctAnswer(firstNumber, operation, secondNumber) {
+             if (operation =="-") {
+                 correctAnswer = firstNumber - secondNumber
+             } else if (operation == "+") {
+                 correctAnswer = firstNumber + secondNumber
+              } return correctAnswer
+         }
+
+         correctAnswer = correctAnswer(firstNumber, operation,secondNumber)
+
+         let answers = [correctAnswer] // the correct answer is included in the possible answers array
+        while (answers.length < 5) {
+        let answer = Math.floor(Math.random() * 200) + 1
+        answer *= Math.round(Math.random()) ? 1 : -1
+        if(answers.indexOf(answer) === -1) answers.push(answer) //an array with unique positive and negative numbers is generated
+    }
+
+    let firstAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+    let firstAnswerIndex = answers.indexOf(firstAnswer)
+    answers.splice(firstAnswerIndex, 1) //removing the selected value from the array
+
+    let secondAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+    let secondAnswerIndex = answers.indexOf(secondAnswer)
+    answers.splice(secondAnswerIndex, 1) //removing the selected value from the array
+
+    let thirdAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+    
+    let thirdAnswerIndex = answers.indexOf(thirdAnswer)
+    answers.splice(thirdAnswerIndex, 1) //removing the selected value from the array
+
+    let fourthAnswer = answers[Math.floor(Math.random() * answers.length)] //selecting a random number from array
+    
+    let fourthAnswerIndex = answers.indexOf(fourthAnswer)
+    answers.splice(fourthAnswerIndex, 1) //removing the selected value from the array
+
+    let fifthAnswer = answers[0]
+
+    let Question = new Object()
+    Question.numberOfQuestions = numberOfQuestions
+    Question.questionIndex = questionIndex
+    Question.firstNumber = firstNumber
+    Question.secondNumber = secondNumber
+    Question.operation = operation
+    Question.correctAnswer = correctAnswer
+    Question.firstAnswer = firstAnswer
+    Question.secondAnswer = secondAnswer
+    Question.thirdAnswer = thirdAnswer
+    Question.fourthAnswer = fourthAnswer
+    Question.fifthAnswer = fifthAnswer
+    Question.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
+    Question.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
+    Question.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
+    Question.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
+    Question.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+
+    questions.push(Question)
     console.log(questions)
 
     questionIndex++ 
 
-    operations = ["+", "-"]
-    numbers = []
 
-    while (numbers.length < 2) {
-        let number = Math.floor(Math.random() * 100) + 1
-        if(numbers.indexOf(number) === -1) numbers.push(number) //an array with unique positive numbers is generated
-    }
-
-
-    firstNumber = numbers[0]
-    operation = operations[Math.floor(Math.random() * operations.length)]
-    secondNumber = numbers[1]
-    
-    function correctAnswer(firstNumber, operation, secondNumber) {
-        if (operation =="-") {
-            correctAnswer = firstNumber - secondNumber
-        } else if (operation == "+") {
-            correctAnswer = firstNumber + secondNumber
-         } return correctAnswer
-    }
+    subTitle.innerText = questions[0].questionIndex + "/" + numberOfQuestions
+    question.innerHTML = "What is " + questions[0].firstNumber + " " + questions[0].operation + " " + questions[0].secondNumber
+    firstRectangle.innerText = questions[0].firstAnswer
+    secondRectangle.innerText = questions[0].secondAnswer
+    thirdRectangle.innerText = questions[0].thirdAnswer
+    fourthRectangle.innerText = questions[0].fourthAnswer
+    fifthRectangle.innerText = questions[0].fifthAnswer
 
 }
 
 function checkAnswerFifth(event) {
     if (isClicked == "no") {
-if (event.currentTarget.innerText == correctAnswer) {
+if (event.currentTarget.innerText == questions[0].correctAnswer) {
     event.currentTarget.style.backgroundColor = 'green'
     fifthCircle.style.backgroundColor = 'green'
         goodAnswer++
     isClicked = "yes"
     clickedList.push(isClicked)
-    Question1.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+    questions[0].fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
 } else {event.currentTarget.style.backgroundColor = 'red'
 fifthCircle.style.backgroundColor = 'red'
 isClicked = "yes"
 clickedList.push(isClicked)
-Question1.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
-if (firstAnswer == correctAnswer) {
+questions[0].fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+if (questions[0].firstAnswer == questions[0].correctAnswer) {
     firstRectangle.style.backgroundColor = 'green'
     firstCircle.style.backgroundColor = 'green'
-    Question1.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
+    questions[0].firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
 }
-if (secondAnswer == correctAnswer) {
+if (questions[0].secondAnswer == questions[0].correctAnswer) {
     secondRectangle.style.backgroundColor = 'green'
     secondCircle.style.backgroundColor = 'green'
-    Question1.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
+     questions[0].secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
 }
-if (thirdAnswer == correctAnswer) {
+if (questions[0].thirdAnswer == questions[0].correctAnswer) {
     thirdRectangle.style.backgroundColor = 'green'
     thirdCircle.style.backgroundColor = 'green'
-    Question1.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
+     questions[0].thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
 }
-if (fourthAnswer == correctAnswer) {
+if (questions[0].fourthAnswer == questions[0].correctAnswer) {
     fourthRectangle.style.backgroundColor = 'green'
     fourthCircle.style.backgroundColor = 'green'
-    Question1.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
+     questions[0].fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
 }}}}
 
 fifthRectangle.addEventListener("click", () => {
@@ -278,38 +242,38 @@ fifthRectangle.addEventListener("click", () => {
 })
 function checkAnswerFourth(event) {
     if (isClicked == "no"){
-    if (event.currentTarget.innerText == correctAnswer) {
+    if (event.currentTarget.innerText == questions[0].correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         fourthCircle.style.backgroundColor = 'green'
         goodAnswer++
     isClicked = "yes"
     clickedList.push(isClicked)
-    Question1.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
+     questions[0].fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
     } else {event.currentTarget.style.backgroundColor = 'red'
     fourthCircle.style.backgroundColor = 'red'
     isClicked = "yes"
     clickedList.push(isClicked)
     console.log(isClicked, clickedList)
-    Question1.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
-    if (firstAnswer == correctAnswer) {
+     questions[0].fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
+    if (questions[0].firstAnswer == questions[0].correctAnswer) {
         firstRectangle.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
-        Question1.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
+         questions[0].firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
     }
-    if (secondAnswer == correctAnswer) {
+    if (questions[0].secondAnswer == questions[0].correctAnswer) {
         secondRectangle.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
-        Question1.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
+         questions[0].secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
     }
-    if (thirdAnswer == correctAnswer) {
+    if (questions[0].thirdAnswer == questions[0].correctAnswer) {
         thirdRectangle.style.backgroundColor = 'green'
         thirdCircle.style.backgroundColor = 'green'
-        Question1.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
+         questions[0].thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
     }
-    if (fifthAnswer == correctAnswer) {
+    if (questions[0].fifthAnswer == questions[0].correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-        Question1.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+         questions[0].fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
     }}}}
     
     fourthRectangle.addEventListener("click", () => {
@@ -318,38 +282,37 @@ function checkAnswerFourth(event) {
 
 function checkAnswerThird(event) {
     if (isClicked == "no"){
-    if (event.currentTarget.innerText == correctAnswer) {
+    if (event.currentTarget.innerText == questions[0].correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         thirdCircle.style.backgroundColor = 'green'
         goodAnswer++
         isClicked = "yes"
         clickedList.push(isClicked)
-        Question1.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
+         questions[0].thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
     } else {event.currentTarget.style.backgroundColor = 'red'
     thirdCircle.style.backgroundColor = 'red'
     isClicked = "yes"
     clickedList.push(isClicked)
-    console.log(isClicked, clickedList)
-    Question1.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
-    if (firstAnswer == correctAnswer) {
+     questions[0].thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
+    if (questions[0].firstAnswer == questions[0].correctAnswer) {
         firstRectangle.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
-        Question1.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
+         questions[0].firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
     }
-    if (secondAnswer == correctAnswer) {
+    if (questions[0].secondAnswer == questions[0].correctAnswer) {
         secondRectangle.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
-        Question1.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
+         questions[0].secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
     }
-    if (fourthAnswer == correctAnswer) {
+    if (questions[0].fourthAnswer == questions[0].correctAnswer) {
         fourthRectangle.style.backgroundColor = 'green'
         fourthCircle.style.backgroundColor = 'green'
-        Question1.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
+         questions[0].fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
     }
-    if (fifthAnswer == correctAnswer) {
+    if (questions[0].fifthAnswer == questions[0].correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-        Question1.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+         questions[0].fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
     }}}}
     
 thirdRectangle.addEventListener("click", () => {
@@ -358,38 +321,37 @@ thirdRectangle.addEventListener("click", () => {
 
 function checkAnswerSecond(event) {
     if (isClicked == "no") {
-    if (event.currentTarget.innerText == correctAnswer) {
+    if (event.currentTarget.innerText == questions[0].correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
         goodAnswer++
         isClicked = "yes"
         clickedList.push(isClicked)
-        Question1.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
+         questions[0].secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
     } else {event.currentTarget.style.backgroundColor = 'red'
     secondCircle.style.backgroundColor = 'red'
     isClicked = "yes"
     clickedList.push(isClicked)
-    console.log(isClicked, clickedList)
-    Question1.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
-    if (firstAnswer == correctAnswer) {
+     questions[0].secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
+    if (questions[0].firstAnswer == questions[0].correctAnswer) {
         firstRectangle.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
-        Question1.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
+         questions[0].firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
     }
-    if (thirdAnswer == correctAnswer) {
+    if (questions[0].thirdAnswer == questions[0].correctAnswer) {
         thirdRectangle.style.backgroundColor = 'green'
         thirdCircle.style.backgroundColor = 'green'
-        Question1.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
+         questions[0].thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
     }
-    if (fourthAnswer == correctAnswer) {
+    if (questions[0].fourthAnswer == questions[0].correctAnswer) {
         fourthRectangle.style.backgroundColor = 'green'
         fourthCircle.style.backgroundColor = 'green'
-        Question1.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
+         questions[0].fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
     }
-    if (fifthAnswer == correctAnswer) {
+    if (questions[0].fifthAnswer == questions[0].correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-        Question1.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+         questions[0].fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
     }}}}
     
 secondRectangle.addEventListener("click", () => {
@@ -398,37 +360,37 @@ secondRectangle.addEventListener("click", () => {
 
 function checkAnswerFirst(event) {
     if (isClicked == "no") {
-    if (event.currentTarget.innerText == correctAnswer) {
+    if (event.currentTarget.innerText == questions[0].correctAnswer) {
         event.currentTarget.style.backgroundColor = 'green'
         firstCircle.style.backgroundColor = 'green'
         goodAnswer++
         isClicked = "yes"
         clickedList.push(isClicked)
-        Question1.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
+         questions[0].firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
     } else {event.currentTarget.style.backgroundColor = 'red'
     firstCircle.style.backgroundColor = 'red'
     isClicked = "yes"
     clickedList.push(isClicked)
-    Question1.firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
-    if (secondAnswer == correctAnswer) {
+     questions[0].firstColor = window.getComputedStyle(firstRectangle, null).getPropertyValue('background-color')
+    if (questions[0].secondAnswer == questions[0].correctAnswer) {
         secondRectangle.style.backgroundColor = 'green'
         secondCircle.style.backgroundColor = 'green'
-        Question1.secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
+         questions[0].secondColor = window.getComputedStyle(secondRectangle, null).getPropertyValue('background-color')
     }
-    if (thirdAnswer == correctAnswer) {
+    if (questions[0].thirdAnswer == questions[0].correctAnswer) {
         thirdRectangle.style.backgroundColor = 'green'
         thirdCircle.style.backgroundColor = 'green'
-        Question1.thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
+         questions[0].thirdColor = window.getComputedStyle(thirdRectangle, null).getPropertyValue('background-color')
     }
-    if (fourthAnswer == correctAnswer) {
+    if (questions[0].fourthAnswer == questions[0].correctAnswer) {
         fourthRectangle.style.backgroundColor = 'green'
         fourthCircle.style.backgroundColor = 'green'
-        Question1.fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
+         questions[0].fourthColor = window.getComputedStyle(fourthRectangle, null).getPropertyValue('background-color')
     }
-    if (fifthAnswer == correctAnswer) {
+    if (questions[0].fifthAnswer == questions[0].correctAnswer) {
         fifthRectangle.style.backgroundColor = 'green'
         fifthCircle.style.backgroundColor = 'green'
-        Question1.fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
+         questions[0].fifthColor = window.getComputedStyle(fifthRectangle, null).getPropertyValue('background-color')
     }}}}
     
 firstRectangle.addEventListener("click", () => {
@@ -436,34 +398,8 @@ firstRectangle.addEventListener("click", () => {
     })
 
 
-function showQuestionNumber() {
-    if (questionIndex <= numberOfQuestions) {
-        subTitle.innerText = questionIndex + "/" + numberOfQuestions 
-    }
-}
-
 function nextQuestion() {
-    previousButton.addEventListener("click", () => {
-        subTitle.innerText = Question1.questionIndex + "/" + Question1.numberOfQuestions
-        question.innerHTML = "What is " + Question1.firstNumber + " " + Question1.operation + " " + Question1.secondNumber
-        firstRectangle.innerText = Question1.firstAnswer
-        secondRectangle.innerText = Question1.secondAnswer
-        thirdRectangle.innerText = Question1.thirdAnswer
-        fourthRectangle.innerText = Question1.fourthAnswer
-        fifthRectangle.innerText = Question1.fifthAnswer
-        firstCircle.style.backgroundColor = Question1.firstColor
-        firstRectangle.style.backgroundColor = Question1.firstColor
-        secondCircle.style.backgroundColor = Question1.secondColor
-        secondRectangle.style.backgroundColor = Question1.secondColor
-        thirdCircle.style.backgroundColor = Question1.thirdColor
-        thirdRectangle.style.backgroundColor = Question1.thirdColor
-        fourthCircle.style.backgroundColor = Question1.fourthColor
-        fourthRectangle.style.backgroundColor = Question1.fourthColor
-        fifthCircle.style.backgroundColor = Question1.fifthColor
-        fifthRectangle.style.backgroundColor = Question1.fifthColor
-        newIsClicked = "yes"
-        console.log(Question1)
-    })
+
 
 let newIsClicked = "no"
 
@@ -733,12 +669,33 @@ let newIsClicked = "no"
                         startButton.innerText = "Restart"
 
 }
+
+previousButton.addEventListener("click", () => {
+    subTitle.innerText = questions[questionIndex-1].questionIndex + "/" + questions[questionIndex-1].numberOfQuestions
+    question.innerHTML = "What is " +  questions[questionIndex-1].firstNumber + " " +  questions[questionIndex-1].operation + " " +  questions[questionIndex-1].secondNumber
+    firstRectangle.innerText =  questions[questionIndex-1].firstAnswer
+    secondRectangle.innerText =  questions[questionIndex-1].secondAnswer
+    thirdRectangle.innerText =  questions[questionIndex-1].thirdAnswer
+    fourthRectangle.innerText =  questions[questionIndex-1].fourthAnswer
+    fifthRectangle.innerText =  questions[questionIndex-1].fifthAnswer
+    firstCircle.style.backgroundColor =  questions[questionIndex-1].firstColor
+    firstRectangle.style.backgroundColor =  questions[questionIndex-1].firstColor
+    secondCircle.style.backgroundColor =  questions[questionIndex-1].secondColor
+    secondRectangle.style.backgroundColor =  questions[questionIndex-1].secondColor
+    thirdCircle.style.backgroundColor =  questions[questionIndex-1].thirdColor
+    thirdRectangle.style.backgroundColor =  questions[questionIndex-1].thirdColor
+    fourthCircle.style.backgroundColor =  questions[questionIndex-1].fourthColor
+    fourthRectangle.style.backgroundColor =  questions[questionIndex-1].fourthColor
+    fifthCircle.style.backgroundColor =  questions[questionIndex-1].fifthColor
+    fifthRectangle.style.backgroundColor =  questions[questionIndex-1].fifthColor
+    newIsClicked = "yes"
+    console.log( questions[questionIndex-1])
+})
     
 }
 
 
 nextButton.addEventListener("click", () => {
-    showQuestionNumber()
     nextQuestion()
 })
 
